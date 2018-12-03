@@ -152,6 +152,7 @@ DB::table('pdcs')
     $saif = "saif";
     $saif = "saif";
     $saif = "saif";
+    $badis = "rootfilekid"
 return redirect('/dafpdc');
 Alert::message('Robots are working!');
 }
