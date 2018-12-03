@@ -1,140 +1,151 @@
 @extends('layouts.instructorLayout.instructor_design')
 @section('content')
 
-
-        <!DOCTYPE html>
-<html>
-
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>INSPINIA | Calendar</title>
-
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
-    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
-
-    <link href="css/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
-    <link href="css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
-
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-
-
-</head>
-
-<body>
-
 <div id="wrapper">
-
-
-    <div id="page-wrapper" class="white-bg">
+    <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
             @include('layouts.instructorLayout.instructor_header')
         </div>
-        <div class="wrapper wrapper-content">
-            <div class="row animated fadeInDown">
-              <h1 class="center">List of missions</h1>
-              <a href="{{ url('/managerpdc') }}" class="btn btn-success">  go to pdc </a>
 
-              <table class="table" border="2">
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-8">
+                <h2>List of missions</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="http://127.0.0.1:8000">Dashboard</a>
+                    </li>
+                    <li class="active">
+                        <strong>List of missions</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-4">
+                <div class="title-action">
+                    <a href="{{ url('/managerpdc') }}" class="btn btn-primary"><i class="fa fa-plus-square-o"></i> New
+                        PDC </a>
+                </div>
+            </div>
 
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Basic Table</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config option 1</a>
+                                    </li>
+                                    <li><a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
 
-
-                        <thead>
-                        <tr>
-                             <th scope="col">id</th>
-                            <th scope="col">user</th>
-                            <th scope="col">event</th>
-                            <th scope="col">name</th>
-                            <th scope="col">prime_amount</th>
-                            <th scope="col">order Mission</th>
-                            <th scope="col">start date</th>
-                            <th scope="col">end date</th>
-                            <th scope="col">action </th>
-                            <th scope="col">action</th>
-                            <th scope="col">comment </th>
-                            <th scope="col">status </th>
-
-
-
-
-
-
-                        </tr>
-                        </thead>
-                        <tbody>
-
-
-                        <form action="{{action('ManagerController@ValideManager')}} " method="POST" >
-                          {{ csrf_field() }}
-                          <?php
-
-                        //dd($events);
-                        //die();
-
-                          foreach ($trips as $trip):
-                            if($trip->status=="planned"){
-
-                              $aa=$trip->id;
-
-                            ?>
-                        <tr>
-
-                <td>
-            <input type="hidden" name="id" value="{{$aa}}" >
-                </td>
-
-                          <td>
-
-                              {{$trip->user->name}}
-                            </td>
-
-                          <td>{{$trip->events->title}} </td>
-                          <td> {{$trip->name}} </td>
-                          <td>{{$trip->prime_amount}} </td>
-                          <td > {{$trip->om_id}} </td>
-                          <td> {{$trip->start_date}} </td>
-                          <td> {{$trip->end_date}} </td>
-                          <td>
-                            <input type="submit"   name="submitbutton" value="valide" class="btn btn-success"  >
-
-                            </td>
-                            <td>
-                               <input type="submit" name="submitbutton" value="Invalide" class="btn btn-danger" >
-                            </td>
-                              <td>
-                          <input type="text" name="comment" placeholder="Enter text here">
-                            </td>
-                          <td> {{$trip->status}} </td>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">Instructor Name</th>
+                                    <th scope="col">Session Name</th>
+                                    <th scope="col">Prime Amount</th>
+                                    <th scope="col">OM ID</th>
+                                    <th scope="col">Start Date</th>
+                                    <th scope="col">End Date</th>
+                                    <th scope="col">Options</th>
+                                    <th scope="col">comment</th>
+                                    <th scope="col">status</th>
 
 
+                                </tr>
+                                </thead>
+                                <tbody>
 
 
-                        </tr>
-                          <?php
-}
-                        endforeach; ?>
+                                <form action="{{action('ManagerController@ValideManager')}} " method="POST">
+                                    {{ csrf_field() }}
+                                    <?php
+
+                                    //dd($events);
+                                    //die();
+
+                                    foreach ($trips as $trip):
+                                    if($trip->status == "planned"){
+
+                                    $aa = $trip->id;
+
+                                    ?>
+                                    <tr>
+
+                                        <td>
+                                            <input type="hidden" name="id" value="{{$aa}}">#
+                                        </td>
+
+                                        <td>
+
+                                            {{$trip->user->name}}
+                                        </td>
+
+                                        <td>{{$trip->events->title}} </td>
+                                        <td>{{$trip->prime_amount}} </td>
+                                        <td> {{$trip->om_id}} </td>
+                                        <td> {{$trip->start_date}} </td>
+                                        <td> {{$trip->end_date}} </td>
+                                        <td>
+                                            <input type="submit" name="submitbutton" value="valide"
+                                                   class="btn btn-success">
 
 
+                                            <input type="submit" name="submitbutton" value="Invalide"
+                                                   class="btn btn-danger">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="comment" placeholder="Enter text here">
+                                        </td>
+                                        <td>
 
-                        </tbody>
-                    </table>
+                                            <?php if ($trip->status == "planned")
 
-                    <form>
+                                                $status = "warning";
+                                            ?>
+
+                                            <span class="label label-<?=$status?>"> {{$trip->status}}</span>
+
+                                        </td>
+
+
+                                    </tr>
+                                <?php
+                                }
+                                endforeach; ?>
+
+
+                                </tbody>
+
+
+                            </table>
+
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
-
-
 
     </div>
 </div>
+
 
 <!-- Mainly scripts -->
 <script src="js/plugins/fullcalendar/moment.min.js"></script>
