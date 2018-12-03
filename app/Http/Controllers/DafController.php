@@ -151,6 +151,7 @@ DB::table('pdcs')
   $saif="saif";
     $saif = "saif";
     $saif = "saif";
+    $saif = "saif";
 return redirect('/dafpdc');
 Alert::message('Robots are working!');
 }
