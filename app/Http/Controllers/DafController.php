@@ -148,11 +148,7 @@ DB::table('pdcs')
 ->where('id',$aa)
 ->update(['validated_DAF'=>$cc]);
   $pdcs=Pdcs::all();
-  $saif="saif";
-    $saif = "saif";
-    $saif = "saif";
-    $saif = "saif";
-    $badis = "rootfilekid"
+    $this
 return redirect('/dafpdc');
 Alert::message('Robots are working!');
 }
