@@ -148,7 +148,7 @@ DB::table('pdcs')
 ->where('id',$aa)
 ->update(['validated_DAF'=>$cc]);
   $pdcs=Pdcs::all();
-    $this
+    sssss
 return redirect('/dafpdc');
 Alert::message('Robots are working!');
 }
