@@ -16,13 +16,13 @@ class ManagerController extends Controller
   public function showtrips()
 
         {
-        $events=Events::All();
+            // $events=Events::All();
          $trips =Trip::all();
          $users=User::all();
          $events=Events::all();
 
 
-          //   DB::table('trips')->select('user_id','events_id','name','prime_amount','om_id','start_date','end_date','status')->get();
+            //   DB::table('trips')->select('user_id','events_id','name','prime_amount','om_id','start_date','end_date','status')->get();
 
             return view('manager.manager',compact('trips','events','users'));
 
