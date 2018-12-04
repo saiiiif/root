@@ -23,7 +23,6 @@ class DafController extends Controller
 public function showtrips()
 
       {
-      $events=Events::All();
        $trips =Trip::all();
        $users=User::all();
        $events=Events::all();
@@ -80,6 +79,16 @@ $bb=$request->input("om_id");
   $listOm    = Trip::where('om_id', $bb)->get();
 
   $data = ['title' => 'Ordre de Mission'];
+  case 'Montant_Bank' :
+        $aa=intval($request["id"]);
+        $cc="Montant_Bank" ;
+        DB::table('trips')
+            ->where('id',$aa)
+            ->update(['status'=>$cc]);
+        $trips =Trip::all();
+        Alert::message('Robots are working!');
+      return redirect ('/daf');
+      break;
 
   //$pdf = PDF::loadView('instructor.om_template', $data);
 
@@ -148,7 +157,6 @@ DB::table('pdcs')
 ->where('id',$aa)
 ->update(['validated_DAF'=>$cc]);
   $pdcs=Pdcs::all();
-    sssss
 return redirect('/dafpdc');
 Alert::message('Robots are working!');
 }
