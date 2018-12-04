@@ -12,8 +12,8 @@
 */
 //Route::match(['get','post'],'/perPost','AdminController@Post_Permission' ); ////
 //Route::match(['get','post'],'/admin/role','AdminController@roles_aff'); ////
-
-
+Route::post('instructor/session/','EventsController@store');
+Route::match(['get','post'],'/instructor/session/save','EventsController@planned_mission');
 Route::get('/daf','DafController@showtrips' );
 Route::get('/dafpdc','DafController@showpdcs');
 //Route::get('/managerpdc','ManagerController@validepdcs' );
