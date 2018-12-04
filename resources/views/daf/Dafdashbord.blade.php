@@ -74,13 +74,9 @@
 
                         <form action="{{action('DafController@ValideDaf')}} " method="POST" >
                           {{ csrf_field() }}
-                          <?php
 
-                        //dd($events);
-                        //die();
-
-                          foreach ($trips as $trip):
-                            if($trip->status=="Valide by Manager"){ ?>
+                          @foreach ($trips as $trip)
+                            @if(($trip->status=="Valide by Manager")||($trip->status=="Valide by DAF"))
                         <tr>
                           <td >
 
@@ -99,12 +95,18 @@
                              {{$trip->om_id}} </td>
                           <td name="start_date"> {{$trip->start_date}} </td>
                           <td name="end_date"> {{$trip->end_date}} </td>
+                            @if($trip->status=="Valide by Manager")
                           <td>
                             <input type="submit"   name="submitbutton" value="valide" class="btn btn-success" >
                             <input type="submit" name="submitbutton" value="Invalide" class="btn btn-danger" >
 
 
                           </td>
+                                @elseif($trip->status=="Valide by DAF")
+                                <td>
+                                    <input type="submit"   name="submitbutton" value="Montant_Bank" class="btn btn-success" >
+                                </td>
+                            @endif
                           <td> <input type="submit" name="submitbutton" value="generateOm" class="btn btn-dark">
                           <td > {{$trip->status}} </td>
 
@@ -112,10 +114,8 @@
 
 
                         </tr>
-                          <?php
-                        }
-                        endforeach; ?>
-
+                        @endif
+                        @endforeach
                         </tbody>
                     </table>
 
