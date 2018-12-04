@@ -79,6 +79,7 @@ $bb=$request->input("om_id");
   $listOm    = Trip::where('om_id', $bb)->get();
 
   $data = ['title' => 'Ordre de Mission'];
+  break;
   case 'Montant_Bank' :
         $aa=intval($request["id"]);
         $cc="Montant_Bank" ;
