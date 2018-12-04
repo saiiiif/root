@@ -26,5 +26,4 @@ class Events extends Model
     public function oms() {
         return $this->hasMany('App\Om') ;
     }
-{}
 }

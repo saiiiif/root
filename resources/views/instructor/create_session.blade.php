@@ -4,6 +4,12 @@
         <div id="page-wrapper" class="gray-bg">
             @include('layouts.instructorLayout.instructor_header')
             <div class="row wrapper border-bottom white-bg page-heading">
+                @if(Session::has('flash_message_error'))
+                    <div class="alert alert-danger alert-dismissable">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        {!! session('flash_message_error') !!}<a class="alert-link" href="#"></a>.
+                    </div>
+                @endif
                 <div class="col-lg-8">
                     <h2>Ordre Mission</h2>
                     <ol class="breadcrumb">
@@ -24,7 +30,7 @@
             <div class="wrapper wrapper-content">
 
                 <div class="row">
-                    <form id="om_form" role="form" action="{{url ('instructor/session')}}" method="post" >
+                    <form id="om_form" role="form" action="/instructor/session/save" method="post" >
 
                                 <div class="col-lg-6">
 
@@ -65,15 +71,19 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="control-label">Flight Ticket</label>
-                                                            <input type="file" name="picture" class="form-control" accept="image/*">
+                                                            <input type="file" name="picture" class="form-control" accept="image/*" required>
                                                         </div>
-
+                                                    <div class="form-group">
+                                                        <label class="control-label">Hotel</label>
+                                                        <input type="file" name="picture" class="form-control" accept="image/*">
+                                                    </div>
 
                                                         <hr>
 
                                                         <div>
                                                         <button id="session_add" class="btn btn-success " type="button"><i class="fa fa-plus"></i>&nbsp;&nbsp;<span class="bold">Add session</span></button>
-                                                        <button id="om_submit" class="btn btn-primary pull-right " type="button"><i class="fa fa-save"></i>&nbsp;&nbsp;<span class="bold">Save</span></button>
+                                                        <button id="valide_submit" class="btn btn-primary pull-right " type="submit"><i class="fa fa-save"></i>&nbsp;&nbsp;<span class="bold">Valide</span></button>
+                                                            <button id="om_submit" name='enregistrer' class="btn btn-primary  " type="button"><i class="fa fa-save"></i>&nbsp;&nbsp;<span class="bold">Save</span></button>
                                                         </div>
                                                 </div>
                                             </div>
