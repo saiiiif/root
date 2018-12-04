@@ -459,14 +459,16 @@
 
             $("#om_submit").click(function(e) {
                     //prevent Default functionality
-                    e.preventDefault();
-                    // alert("aaaaaa");
+                e.preventDefault();
+                document.forms['om_form'].action = '/instructor/session';
+                document.forms['om_form'].target = '_self';
+                document.forms['om_form'].submit();
                     //get the action-url of the form
                     //var actionurl = e.currentTarget.action;
-                    var actionurl = $("#om_form").attr("action");
+                   // var actionurl = $("#om_form").attr("action");
                     //do your own request an handle the results
 
-                $.ajax({
+               /* $.ajax({
                         url: actionurl,
                         type: 'post',
                         //dataType: 'application/json',
@@ -483,7 +485,7 @@
                         },error: function(xhr, ajaxOptions, thrownError){
                             console.log("error "+ xhr.status+" ,"+" "+ajaxOptions+", "+thrownError);
                         }
-                });
+                });*/
 
             });        
             
