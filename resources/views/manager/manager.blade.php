@@ -109,6 +109,12 @@
 
                                             <input type="submit" name="submitbutton" value="Invalide"
                                                    class="btn btn-danger">
+
+
+                                            <a id="more" href="#" class="btn btn-info"
+                                               onclick="$('.details{{$aa}}').slideToggle(function(){$('#more');});">Details</a>
+
+
                                         </td>
                                         <td>
                                             <input type="text" name="comment" placeholder="Enter text here">
@@ -126,7 +132,69 @@
 
 
                                     </tr>
-                                <?php
+                                    <tr class="details{{$aa}}" style="display:none">
+                                        <td colspan="10">
+                                            <div class="m-t-md">
+                                                <strong>Found 61 Order Mission.</strong>
+                                            </div>
+
+                                            <div class="table-responsive">
+                                                <table class="table table-hover issue-tracker">
+                                                    <tbody>
+
+                                                    @foreach($trips as $trip )
+                                                        <td></td>
+                                                        <td>{{$trip->events->om_id}} </td>
+
+
+                                                        <tr>
+                                                            <td>
+                                                                <span class="label label-primary">{{$trip->events->status}}</span>
+                                                            </td>
+                                                            <td class="issue-info">
+                                                                <a href="#">
+                                                                    ISSUE-23
+                                                                </a>
+
+                                                                <small>
+                                                                    This is issue with the coresponding note
+                                                                </small>
+                                                            </td>
+                                                            <td>
+                                                                Adrian Novak
+                                                            </td>
+                                                            <td>
+                                                                12.02.2015 10:00 am
+                                                            </td>
+                                                            <td>
+                                                                <span class="pie"
+                                                                      style="display: none;">0.52,1.041</span>
+                                                                <svg class="peity" height="16" width="16">
+                                                                    <path d="M 8 8 L 8 0 A 8 8 0 0 1 14.933563796318165 11.990700825968545 Z"
+                                                                          fill="#1ab394"></path>
+                                                                    <path d="M 8 8 L 14.933563796318165 11.990700825968545 A 8 8 0 1 1 7.999999999999998 0 Z"
+                                                                          fill="#d7d7d7"></path>
+                                                                </svg>
+                                                                2d
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <button class="btn btn-white btn-xs"> Tag</button>
+                                                                <button class="btn btn-white btn-xs"> Mag</button>
+                                                                <button class="btn btn-white btn-xs"> Rag</button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                        </div>
+
+
+                        </td>
+                                    </tr>
+
+                        <?php
                                 }
                                 endforeach; ?>
 
