@@ -33,7 +33,11 @@ class AdminController extends Controller
 
                     //echo "Success";die;
                     return redirect('/instructor')->with($notification);
-                }  else {
+                }  else if (Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'admin' => '2']))
+                { return redirect('/daf')->with($notification);
+                } else if (Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'admin' => '3']))
+                { return redirect('/manager')->with($notification);}
+                else{
                 //echo "failed";die;
                 return redirect('/')->with('flash_message_error', 'Invalid Username or Password');
             }

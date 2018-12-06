@@ -12,6 +12,10 @@
 */
 //Route::match(['get','post'],'/perPost','AdminController@Post_Permission' ); ////
 //Route::match(['get','post'],'/admin/role','AdminController@roles_aff'); ////
+Route::match(['get','post'],'/instructor/session/Modif','EventsController@ModifOM');
+Route::match(['get','post'],'instructor/session/validDRAFT','EventsController@ValideDRAFT');
+Route::post('instructor/session/saveModif','EventsController@storeModif');
+Route::match(['get','post'],'/instructor/session/valideMof','EventsController@planned_missionmodif');
 Route::post('instructor/session/','EventsController@store');
 Route::match(['get','post'],'/instructor/session/save','EventsController@planned_mission');
 Route::get('/daf','DafController@showtrips' );
@@ -87,16 +91,13 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'],function() 
     //Manage Session Routes
 
     Route::match(['get','post'],'/instructor/sessions','EventsController@index');
-
     Route::get('/instructor/session/create','EventsController@create');
     Route::post('instructor/session/','EventsController@store');
     Route::get('instructor/session/{id}/edit_session','EventsController@edit');
     Route::put('instructor/session/{id}','EventsController@update');
     Route::get('instructor/session/delete/{id}','EventsController@destroy');
     Route::get('instructor/session/{id}/view_session','EventsController@view');
-
     Route::get('instructor/session/delivery','EventsController@deliveryDay');
-
     Route::match(['get','post'],'instructor/session/validateStatus','EventsController@validateStatus');
 
 

@@ -42,6 +42,7 @@ class EventsController extends Controller
             //echo '<pre>'; print_r($om); die;
             $om_id = Trip::where('user_id', Auth::user()->id)->get();
 
+
         }
 
         return view('instructor.manage_all_session', ['events' => $listevent])->with(['om' => $om])->with(['omList' => $om_id])->with(['sessions' => $session_list]);
@@ -572,5 +573,76 @@ class EventsController extends Controller
         );
         return redirect('/instructor/sessions')->with($notification);
 
+    }
+    public function  ValideDRAFT(Request $request)
+    {$result = Request("id");
+        DB::table('trips')->where('om_id',$result)->update(array('status'=>"planned"));
+        return redirect("/instructor/sessions ");
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function  ModifOM(Request $request)
+    {$result = Request("id");
+        $listevent = DB::select('SELECt * from stm_events where om_id=?',[$result]);
+        $listrips=DB::select('SELECt * from stm_trips where om_id=?',[$result]);
+   //  return $listevent;
+     return view('instructor.Modif_session', compact( 'listevent','listrips'));
+    }
+    public function  planned_missionmodif(Request $request)
+    {
+        return 'aaaaaaaaaaa';
+    }
+    public function  storeModif(Request $request)
+    {
+        // check if om with id exist
+        $eventId = 0;
+        $session_count = count($request->input("name_session"));
+         // save OM
+            // save session
+            for ($i = 0; $i < $session_count; $i++) {
+               if (isset($request->input('id_session')[$i]))
+                  {
+                      DB::table('events')
+                          ->where('id',$request->input('id_session')[$i])
+                          ->update(['country' => $request->input('country')[$i],'title' => $request->input('name_session')[$i],
+                              'start_date' => $request->input('start_training_date')[$i],'end_date' => $request->input('end_training_date')[$i],
+                              'delivery_days' => $request->input('delivery_days')[$i],'location' => $request->input('location')[$i],'Customer' => $request->input('Customer')[$i],'locator' => $request->input('locator')[$i]]);
+                  }
+    else
+                      {// save session if OM exist
+                          $event = new Events();
+                          $event->user_id = Auth::user()->id;
+                          $event->country = $request->input('country')[$i];
+                          $event->locator = $request->input('locator')[$i];
+                          $event->title = $request->input('name_session')[$i];
+                          $event->om_id = $request->input('om_id');
+                          $event->customer = $request->input('customer')[$i];
+                          $event->start_date = $request->input('start_training_date')[$i];
+                          $event->end_date = $request->input('end_training_date')[$i];
+                          $event->location = $request->input('location')[$i];
+                          $event->delivery_days = $request->input('delivery_days')[$i];
+                          $event->hotel_contact = $request->input('hotel_name')[$i];
+                          $event->status = "DRAFT";
+                          $event->save();
+                      }
+
+
+            }
+         DB::table('trips')
+            ->where('om_id',$request->input('om_id'))
+            ->update(['prime_amount' => $request->input('amount'),'start_date' => $request->input('start_trip_date'),
+                'end_date' => $request->input('end_trip_date'),'formule' => $request->input('formule')]);
+
+        $notification = array(
+            'message' => 'Session Modif Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect('/instructor/sessions')->with($notification);
+        // return $notification;
+
+        //return response()->json(['message'=>'New OM added Successfully.']);
     }
 }
