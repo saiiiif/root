@@ -98,7 +98,18 @@ class EventsController extends Controller
         );
         return redirect('/instructor/sessions')->with($notification);
     }
+    public function validatePdcInstructor(Request $request)
+    {
 
+        $pdcs = Pdcs::where('events_id', $request->event_id)->get();
+
+        $notification = array(
+            'message' => 'PDC valider avec success',
+            'alert-type' => 'success'
+        );
+       // return redirect('/instructor/sessions')->with($notification);
+        return 'aaaa';
+    }
     public function generate_om($id)
     {
 
@@ -282,25 +293,28 @@ class EventsController extends Controller
 
     public function store(Request  $request)
     {
-
-        // check if om with id exist
-        $result = Trip::find($request->input('om_id'));
+        //$result = Trip::find($request->input("om_id"));
+        //foreach ($a as $key => $value) {
+        //  if (($request->input('start_trip_date')> $value->start_date &&  $request->input('start_trip_date') <$value->end_date )||($request->input('end_trip_date') > $value->start_date&& $request->input('end_trip_date') <$value->end_date))
+        //  }
         $result_Date = DB::SELECT("select start_date, end_date from stm_trips where user_id=?",[Auth::user()->id]) ;
-         foreach ($result_Date as $key => $value) {
-             if (($request->input('start_trip_date')> $value->start_date &&  $request->input('start_trip_date') <$value->end_date )||($request->input('end_trip_date') > $value->start_date&& $request->input('end_trip_date') <$value->end_date))
-             {$user=Auth::user();
-                 Notification::send($user, new \App\Notifications\Add_sessionsNotification($user));
+        foreach ($result_Date as $key => $value) {
+            if (($request->input('start_trip_date')> $value->start_date &&  $request->input('start_trip_date') <$value->end_date )||($request->input('end_trip_date') > $value->start_date&& $request->input('end_trip_date') <$value->end_date))
+            {$user=Auth::user();
+                Notification::send($user, new \App\Notifications\Add_sessionsNotification($user));
 
-                 $notification = array(
-                     'message' => 'conflit du session ',
-                     'alert-type' => 'Erreur'
-                 );
-                 return redirect('/instructor/session/create')->with('flash_message_error', 'conflit des session');
-             }}
-        if ($result == null)
+                $notification = array(
+                    'message' => 'conflit du session ',
+                    'alert-type' => 'Erreur'
+                );
+                return redirect('/instructor/session/create')->with('flash_message_error', 'conflit des session');
+            }}
+
+
+        //if ($result == null)
             $count = 0;
-        else
-            $count = count($result);
+        //else
+          //  $count = count($result);
         $eventId = 0;
         $session_count = count($request->input("name_session"));
 
@@ -322,7 +336,7 @@ class EventsController extends Controller
                 $event->location = $request->input('location')[$i];
                 $event->delivery_days = $request->input('delivery_days')[$i];
                 $event->hotel_contact = $request->input('hotel_name')[$i];
-                $event->status = "planned";
+                $event->status = "DRAFT";
                 $event->save();
 
                 $eventId = $event->id;
@@ -357,28 +371,9 @@ class EventsController extends Controller
             }
 
             $trip->save();
-        } else {
-            // save session if OM exist
-            for ($i = 0; $i < $session_count; $i++) {
-                $event = new Events();
-                $event->user_id = Auth::user()->id;
-                $event->country = $request->input('country')[$i];
-                $event->locator = $request->input('locator')[$i];
-                $event->title = $request->input('name_session')[$i];
-                $event->om_id = $request->input('om_id');
-                $event->customer = $request->input('customer')[$i];
-                $event->start_date = $request->input('start_training_date')[$i];
-                $event->end_date = $request->input('end_training_date')[$i];
-                $event->location = $request->input('location')[$i];
-                $event->delivery_days = $request->input('delivery_days')[$i];
-                $event->hotel_contact = $request->input('hotel_name')[$i];
-                $event->status = "DRAFT";
-                $event->save();
-
-            }
         }
 
-        $user=Auth::user();
+        $user = Auth::user();
         Notification::send($user, new \App\Notifications\Add_sessionsNotification($user));
 
         $notification = array(
@@ -386,11 +381,6 @@ class EventsController extends Controller
             'alert-type' => 'success'
         );
         return redirect('/instructor/sessions')->with($notification);
-        // return $notification;
-
-           //return response()->json(['message'=>'New OM added Successfully.']);
-
-
     }
 
 
@@ -593,7 +583,50 @@ class EventsController extends Controller
     }
     public function  planned_missionmodif(Request $request)
     {
-        return 'aaaaaaaaaaa';
+        // check if om with id exist
+        $eventId = 0;
+        $session_count = count($request->input("name_session"));
+        // save OM
+        // save session
+        for ($i = 0; $i < $session_count; $i++) {
+            if (isset($request->input('id_session')[$i]))
+            {
+                DB::table('events')
+                    ->where('id',$request->input('id_session')[$i])
+                    ->update(['country' => $request->input('country')[$i],'title' => $request->input('name_session')[$i],
+                        'start_date' => $request->input('start_training_date')[$i],'end_date' => $request->input('end_training_date')[$i],
+                        'delivery_days' => $request->input('delivery_days')[$i],'location' => $request->input('location')[$i],'Customer' => $request->input('Customer')[$i],'locator' => $request->input('locator')[$i],'status'=>'Planned']);
+            }
+            else
+            {// save session if OM exist
+                $event = new Events();
+                $event->user_id = Auth::user()->id;
+                $event->country = $request->input('country')[$i];
+                $event->locator = $request->input('locator')[$i];
+                $event->title = $request->input('name_session')[$i];
+                $event->om_id = $request->input('om_id');
+                $event->customer = $request->input('customer')[$i];
+                $event->start_date = $request->input('start_training_date')[$i];
+                $event->end_date = $request->input('end_training_date')[$i];
+                $event->location = $request->input('location')[$i];
+                $event->delivery_days = $request->input('delivery_days')[$i];
+                $event->hotel_contact = $request->input('hotel_name')[$i];
+                $event->status = "Planned";
+                $event->save();
+            }
+
+
+        }
+        DB::table('trips')
+            ->where('om_id',$request->input('om_id'))
+            ->update(['prime_amount' => $request->input('amount'),'start_date' => $request->input('start_trip_date'),
+                'end_date' => $request->input('end_trip_date'),'formule' => $request->input('formule'),'status'=>'Planned']);
+
+        $notification = array(
+            'message' => 'Session Edit Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect('/instructor/sessions')->with($notification);
     }
     public function  storeModif(Request $request)
     {
@@ -637,12 +670,23 @@ class EventsController extends Controller
                 'end_date' => $request->input('end_trip_date'),'formule' => $request->input('formule')]);
 
         $notification = array(
-            'message' => 'Session Modif Successfully',
+            'message' => 'Session Edit Successfully',
             'alert-type' => 'success'
         );
         return redirect('/instructor/sessions')->with($notification);
         // return $notification;
 
         //return response()->json(['message'=>'New OM added Successfully.']);
+    }
+    public function  SupOM(Request $request)
+    {$result = Request("id");
+        DB::table('Trips')->where('om_id', '=', $result)->delete();
+        DB::table('events')->where('om_id', '=', $result)->delete();
+
+        $notification = array(
+            'message' => 'Session Edit Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect('/instructor/sessions')->with($notification);
     }
 }

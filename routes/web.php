@@ -12,6 +12,7 @@
 */
 //Route::match(['get','post'],'/perPost','AdminController@Post_Permission' ); ////
 //Route::match(['get','post'],'/admin/role','AdminController@roles_aff'); ////
+Route::match(['get','post'],'/instructor/session/SuprimDRAFT','EventsController@SupOM');
 Route::match(['get','post'],'/instructor/session/Modif','EventsController@ModifOM');
 Route::match(['get','post'],'instructor/session/validDRAFT','EventsController@ValideDRAFT');
 Route::post('instructor/session/saveModif','EventsController@storeModif');
@@ -22,7 +23,7 @@ Route::get('/daf','DafController@showtrips' );
 Route::get('/dafpdc','DafController@showpdcs');
 //Route::get('/managerpdc','ManagerController@validepdcs' );
 
-
+Route::get('/manager/valide','ManagerController@ValideManager' );
 Route::get('/managerpdc','ManagerController@showpdcs' );
 Route::match(['get','post'],'/managerpdcvalide','ManagerController@validepdcs' );
 
@@ -77,10 +78,10 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'],function() 
     Route::post('instructor/excel/generate', 'EventsController@generate_excel');
 
     Route::post('instructor/pdc/uploads/', 'EventsController@imagesUploadPost')->name('ajaxupload.action');;
-    Route::get('instructor/pdc/
-    ', 'EventsController@validatePdc');
+    Route::get('instructor/pdc/', 'EventsController@validatePdc');
+    Route::get('instructor/pdcvalide/', 'EventsController@validatePdcInstructor');
 
-    //Oder Mission Routes
+//Oder Mission Routes
     Route::get('/instructor/create','OmController@create');
     Route::post('instructor/om/store','OmController@store');
     Route::match(['get','post'],'/instructor/om','OmController@index');

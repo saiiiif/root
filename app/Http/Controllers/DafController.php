@@ -44,53 +44,63 @@ public function showtrips()
   $users=User::all();
   $events=Events::all();
 
-$aa=intval($request["id"]);
+$aa=$request["idDAF"];
 $cc="Valide by DAF";
 //dd($aa);
 //die();
-switch($request->input('submitbutton')){
+
+     switch($request->input('submit')){
   case 'valide':
     // code...
 
-        DB::table('trips')
+       DB::table('trips')
                 ->where('id',$aa )
                 ->update(['status' => $cc]);
-              //Alert::message('Message', 'Optional Title');
+              Alert::message('Message', 'Optional Title');
            $trips =Trip::all();
 Alert::message('Robots are working!');
-      return redirect ('/daf');
+     return redirect ('/daf');
 break;
 
 case 'Invalide':
-  $aa=intval($request["id"]);
+  $aa=intval($request["idDAF"]);
   $cc="Invalide by DAF" ;
   DB::table('trips')
 ->where('id',$aa)
 ->update(['status'=>$cc]);
-  $trips =Trip::all();
+ $trips =Trip::all();
   Alert::message('Robots are working!');
 return redirect ('/daf');
   break;
 
 case 'generateOm':
 
-$bb=$request->input("om_id");
+$bb=$request->input("idDAF");
   $listevent = Events::where('om_id', $bb)->get();
   $listOm    = Trip::where('om_id', $bb)->get();
 
   $data = ['title' => 'Ordre de Mission'];
-  break;
+    return view('instructor.om_template', ['events' => $listevent])->with(['om' => $listOm]);
+    break;
   case 'Montant_Bank' :
-        $aa=intval($request["id"]);
-        $cc="Montant_Bank" ;
+        $aa=intval($request["idDAF"]);
+       $cc="Montant_Bank" ;
         DB::table('trips')
-            ->where('id',$aa)
+           ->where('id',$aa)
             ->update(['status'=>$cc]);
         $trips =Trip::all();
         Alert::message('Robots are working!');
       return redirect ('/daf');
       break;
-
+         case 'Montant_Recu' :
+             $aa=intval($request["idDAF"]);
+             $cc="Montant_Recu" ;
+             DB::table('trips')
+                 ->where('id',$aa)
+                 ->update(['status'=>$cc]);
+             $trips =Trip::all();
+             return redirect ('/daf');
+             break;
   //$pdf = PDF::loadView('instructor.om_template', $data);
 
   //return $pdf->download('hdtuto.pdf');

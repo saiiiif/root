@@ -32,7 +32,7 @@
 
 <body>
 
-<div id="wrapper">
+<body id="wrapper">
 
 
     <div id="page-wrapper" class="gray-bg">
@@ -72,15 +72,15 @@
                         <tbody>
 
 
-                        <form action="{{action('DafController@ValideDaf')}} " method="POST" >
+                        <form action="/DafValide " method="POST" >
                           {{ csrf_field() }}
 
                           @foreach ($trips as $trip)
-                            @if(($trip->status=="Valide by Manager")||($trip->status=="Valide by DAF"))
+                            @if(($trip->status=="Valide by Manager")||($trip->status=="Valide by DAF")||($trip->status=="Montant_Bank"))
                         <tr>
                           <td >
 
-                            <input type="text" name="id" value={{$trip->id}} hidden>
+                            <input type="text" name="id_name" value="{{$trip->id}}"  hidden >
                             </td>
                           <td name="username">
 
@@ -97,17 +97,23 @@
                           <td name="end_date"> {{$trip->end_date}} </td>
                             @if($trip->status=="Valide by Manager")
                           <td>
-                            <input type="submit"   name="submitbutton" value="valide" class="btn btn-success" >
-                            <input type="submit" name="submitbutton" value="Invalide" class="btn btn-danger" >
+                              <a  type="submit" name="submitbutton" value="valide" class="btn btn-success" href="/DafValide?idDAF={{$trip->id}}&submit=valide"> valide </a>
+                              <a type="submit" name="submitbutton" value="Invalide" class="btn btn-danger" href="/DafValide?idDAF={{$trip->id}}&submit=Invalide">Invalide </a>
 
 
                           </td>
-                                @elseif($trip->status=="Valide by DAF")
+                            @endif
+                            @if($trip->status=="Valide by DAF")
                                 <td>
-                                    <input type="submit"   name="submitbutton" value="Montant_Bank" class="btn btn-success" >
+                                    <a type="submit"   name="submitbutton" value="Montant_Bank" class="btn btn-success" href="/DafValide?idDAF={{$trip->id}}&submit=Montant_Bank" >Montant_Bank </a>
                                 </td>
                             @endif
-                          <td> <input type="submit" name="submitbutton" value="generateOm" class="btn btn-dark">
+                            @if($trip->status=="Montant_Bank")
+                                <td>
+                                    <a type="submit"   name="submitbutton" value="Montant_Recu" class="btn btn-success" href="/DafValide?idDAF={{$trip->id}}&submit=Montant_Recu" >Montant_Recu </a>
+                                </td>
+                            @endif
+                            <td> <a type="submit" name="submitbutton" value="generateOm" class="btn btn-default" href="/DafValide?idDAF={{$trip->om_id}}&submit=generateOm">Generate_OM  </a></td>
                           <td > {{$trip->status}} </td>
 
 
@@ -116,20 +122,18 @@
                         </tr>
                         @endif
                         @endforeach
+                            </form>
+
                         </tbody>
                     </table>
 
-                    <form>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
 
 
     </div>
 </div>
+</body>
 
 <!-- Mainly scripts -->
 <script src="js/plugins/fullcalendar/moment.min.js"></script>

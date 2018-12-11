@@ -20,7 +20,13 @@ class ManagerController extends Controller
          $trips =Trip::all();
          $users=User::all();
          $events=Events::all();
-
+//            echo '<pre>';
+//            foreach ($trips as $trip){
+//                print_r($trip->events);
+//            }
+//
+//            echo '<pre>';
+//            die();
 
             //   DB::table('trips')->select('user_id','events_id','name','prime_amount','om_id','start_date','end_date','status')->get();
 
@@ -56,6 +62,7 @@ class ManagerController extends Controller
          ->where('id',$aa)
          ->update(['status'=>$cc]);
                $trips =Trip::all();
+
         return redirect('/manager');
 
          }

@@ -28,7 +28,7 @@
     }
 
 
-}
+
 </style>
             <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
@@ -46,6 +46,7 @@
                                 <thead>
                                 <tr>
                                     <th>Id</th>
+                                    <th>Title</th>
                                     <th>Creator</th>
                                     <th>Status</th>
                                     <th>Start Date</th>
@@ -56,11 +57,22 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <form action="/instructor/session/validDRAFT">
                                 @foreach($omList as $event)
 
                                 <tr>
-                                        <td>{{ $omid = $event->om_id }}</td>
-                                        <td>{{$event->user->name}}</td>
+                                        <td >{{ $omid = $event->om_id }}</td>
+
+                                  <?php
+                                    $name="";
+                                   // foreach($om as $even)
+                                        //if($omid == $even->om_id)
+                                          //$name=$name.$even->title.'('.$even->location.'),';
+
+                                      ?>
+
+                                       <td size="20%">{{$name}}</td>
+                                    <td>{{$event->user->name}}</td>
                                         <td>
                                                 @if(!strcmp($event->status,"Valide by DAF"))
                                                 <span class="label label-primary">{{ ucfirst($event->status) }}</span>
@@ -75,8 +87,18 @@
                                         <td class=""> {{ ucfirst($event->prime_amount) }} € </td>
                                         <td>{{ ucfirst($event->formule) }}</td>
                                         <td>
-                                        <button type="button" data-toggle="modal" data-target="#om_{{$event->om_id}}" class="btn btn-info">
+                                        <button type="button" data-toggle="modal" data-target="#om_{{$event->om_id}}" class="btn btn-info" value="setting">Details
                                         </button>
+                                            @if($event->status=="DRAFT")
+                                            <a   value="{{$event->om_id}}" name="valide_DRAFT" id="valide_DRAFT"  class="btn btn-success" href='/instructor/session/validDRAFT?id={{$event->om_id}}'>Valider
+                                            </a>
+                                                <a   value="{{$event->om_id}}" name="valide_DRAFT" id="Sup_DRAFT"  class="btn btn-danger" href='/instructor/session/SuprimDRAFT?id={{$event->om_id}}'>Delete
+                                                </a>
+                                            <a type="button"   class="btn btn-info"  href="/instructor/session/Modif?id={{$event->om_id}}" value="Modifier">Modifier
+                                            </a>
+                                            @endif
+
+                                       </form>
 
                                         <div class="modal inmodal" id="om_{{$event->om_id}}" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
 
@@ -239,10 +261,10 @@
                                                                                                 PDC valide by Instructor
                                                                                                 <?php break; ?>
                                                                                             @endif
-                                                                                            @if($even->id == $session->events_id && strcmp($even->status,'1') != 0 )
-                                                                                            <a href="#" type="button" class="btn btn-success status" >Valider</a><br>
-                                                                                            <?php break; ?>
-                                                                                            @endif
+                                                                                                    <a   value="{{$event->om_id}}" name="valide_DRAFT" id="Sup_DRAFT"  class="btn btn-danger" href='/instructor/pdcvalide?id={{$event->id}}'>Delete </a>
+                                                                                                  <?php
+                                                                                                    break;
+                                                                                                    ?>
                                                                                         @endforeach
 
                                                                                     @endif

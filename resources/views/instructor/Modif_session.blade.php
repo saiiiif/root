@@ -85,6 +85,7 @@
                                                 <button id="session_add" class="btn btn-success " type="button"><i class="fa fa-plus"></i>&nbsp;&nbsp;<span class="bold">Add session</span></button>
                                                 <button id="valide_submit" class="btn btn-primary pull-right " type="submit"><i class="fa fa-save"></i>&nbsp;&nbsp;<span class="bold">Valide</span></button>
                                                 <button id="om_submit_modif" name='enregistrer' class="btn btn-primary  " type="button"><i class="fa fa-save"></i>&nbsp;&nbsp;<span class="bold">Save</span></button>
+                                                <a id="om_submit_Annul" name='Annuler' class="btn btn-default  " type="button" href="/instructor/sessions"><i class="fa " ></i>&nbsp;&nbsp;<span class="bold">Annuler</span></a>
                                             </div>
                                         </div>
                                     </div>
