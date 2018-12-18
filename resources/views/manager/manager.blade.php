@@ -21,8 +21,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="title-action">
-                        <a href="{{ url('/managerpdc') }}" class="btn btn-primary"><i class="fa fa-plus-square-o"></i> New
-                            PDC </a>
+                        <a href="{{ url('/managerpdc') }}" class="btn btn-primary"><i class="fa fa-plus-square-o"></i>PDC </a>
                     </div>
                 </div>
 

@@ -473,6 +473,20 @@
             });
 
 
+            $("#save_Pdc_Daf").click(function(e) {
+                //prevent Default functionality
+                e.preventDefault();
+                document.forms['pdc_form'].action = '/Daf/Pdc/save';
+                document.forms['pdc_form'].target = '_self';
+                document.forms['pdc_form'].submit();
+                //get the action-url of the form
+                //var actionurl = e.currentTarget.action;
+                // var actionurl = $("#om_form").attr("action");
+                //do your own request an handle the results
+
+            });
+
+
 
 
 

@@ -34,6 +34,40 @@
         <div class="row border-bottom">
 
         </div>
+
+
+
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-8">
+                <h2>List of missions</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="http://127.0.0.1:8000">Dashboard</a>
+                    </li>
+                    <li class="active">
+                        <strong>List of PDC</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-4">
+                <div class="title-action">
+                    <a href="{{ url('/DAF/ADD_PDC') }}" class="btn btn-primary"><i class="fa fa-plus-square-o"></i> ADD PDC</a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="wrapper wrapper-content">
             <div class="row animated fadeInDown">
 

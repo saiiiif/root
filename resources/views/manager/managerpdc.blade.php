@@ -34,6 +34,25 @@
         <div class="row border-bottom">
             @include('layouts.instructorLayout.instructor_header')
         </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-8">
+                <h2>List of missions</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="http://127.0.0.1:8000">Dashboard</a>
+                    </li>
+                    <li class="active">
+                        <strong>List of PDC</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-4">
+                <div class="title-action">
+                    <a href="{{ url('/manager') }}" class="btn btn-primary"><i class="fa fa-plus-square-o"></i> Mission</a>
+                </div>
+            </div>
+
+        </div>
         <div class="wrapper wrapper-content">
             <div class="row animated fadeInDown">
 
@@ -69,7 +88,7 @@
                         <tbody>
 
 
-                        <form action="{{action('ManagerController@validepdcs')}} " method="POST" >
+                        <form action="/managerpdc " method="POST" >
                           {{ csrf_field() }}
                           <?php
 
@@ -85,7 +104,7 @@
                             <tr>
 
                             <td>
-                              <input type="text" name="id" value={{$pdc->id}} hidden>
+                              <input type="text" name="iddddd" value={{$pdc->id}} >
                             </td>
 
                               <td >
@@ -114,8 +133,8 @@
                                     {{$pdc->validated_DAF}}
                                   </td>
                                   <td>
-                                    <input type="submit"   name="submitbutton" value="valide" class="btn btn-success" >
-                                    <input type="submit" name="submitbutton" value="Invalide" class="btn btn-danger" >
+                                      <a   class="btn btn-success"  href="/managerpdcValide?id={{$pdc->id}}&&submitbutton=valide"> Valide </a>
+                                      <a  class="btn btn-danger" href="/managerpdcValide?id={{$pdc->id}}&&submitbutton=Invalide" > Invalide </a>
                                   </td>
                                   <td>
                                     {{$pdc->validated_manager}}
