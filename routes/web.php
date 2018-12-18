@@ -21,12 +21,13 @@ Route::post('instructor/session/','EventsController@store');
 Route::match(['get','post'],'/instructor/session/save','EventsController@planned_mission');
 Route::get('/daf','DafController@showtrips' );
 Route::get('/dafpdc','DafController@showpdcs');
-//Route::get('/managerpdc','ManagerController@validepdcs' );
+Route::match(['get','post'],'/managerpdcValide','ManagerController@validepdcs' );
 
 Route::get('/manager/valide','ManagerController@ValideManager' );
 Route::get('/managerpdc','ManagerController@showpdcs' );
 Route::match(['get','post'],'/managerpdcvalide','ManagerController@validepdcs' );
 
+Route::match(['get','post'],'/DAF/ADD_PDC','DafController@ADDpdcshow' );
 Route::match(['get','post'],'/dafpdcvalide','DafController@validepdcs');
 Route::get('/manager','ManagerController@showtrips' );
 Route::match(['get','post'],'/managervalide','ManagerController@ValideManager');
@@ -37,6 +38,8 @@ Route::match(['get','post'],'/DafValide','DafController@ValideDaf');
 
 Route::match(['get','post'],'/admin','AdminController@login');
 
+Route::match(['get','post'],'/Daf/Pdc/save_val','DafController@Pdcsave_val');
+Route::match(['get','post'],'/Daf/Pdc/save','DafController@PDCsave');
 Auth::routes();
 
 //Admin routes//
