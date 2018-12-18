@@ -86,11 +86,10 @@ class ManagerController extends Controller
          ->update(['validated_manager'=>$cc]);
            $pdcs=Pdcs::all();
 
-
           return redirect('/managerpdc');
          }
          else{
-         $cc=0;
+         $cc=2;
          DB::table('pdcs')
          ->where('id',$aa)
          ->update(['validated_manager'=>$cc]);

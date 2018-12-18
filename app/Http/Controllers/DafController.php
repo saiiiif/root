@@ -175,6 +175,56 @@ Alert::message('Robots are working!');
 
 }
 
+    public function ADDpdcshow(Request $request){
+        $trips =Trip::all();
+        $users=User::all();
+        $events=Events::all();
+return view ('daf.ADD_PDC',compact('trips','events','users','pdcs'));
+    }
+    public function Pdcsave_val(Request $request)
+    {
+        return 'No';
+        $pdc_count = count($request->input("label"));
 
+        for ($i = 0; $i < $pdc_count; $i++) {
+            $pdc = new Pdcs();
+            $pdc->user_id = $request->input('user_id');
+            $pdc->events_id = $request->input('event_id');
+            $pdc->om_id = $request->input('om_id');
+            $pdc->title = $request->input('label')[$i];
+            $pdc->currency = $request->input('currency')[$i];
+            $pdc->type = $request->input('type')[$i];
+            $pdc->amount = $request->input('amount')[$i];
+            $pdc->pay = $request->input('pay')[$i];
+            $pdc->status = "unpaied";
+            $pdc->validated_DAF = "1";
+            // $pdc->attach_file = $image_url;
+            $pdc->save();
+        }
+        return redirect('/dafpdc');
 
+    }
+
+    public function PDCsave(Request $request)
+    {
+        return 'yes';
+        $pdc_count = count($request->input("label"));
+
+        for ($i = 0; $i < $pdc_count; $i++) {
+            $pdc = new Pdcs();
+            $pdc->user_id = $request->input('user_id');
+            $pdc->events_id = $request->input('event_id');
+            $pdc->om_id = $request->input('om_id');
+            $pdc->title = $request->input('label')[$i];
+            $pdc->currency = $request->input('currency')[$i];
+            $pdc->type = $request->input('type')[$i];
+            $pdc->amount = $request->input('amount')[$i];
+            $pdc->pay = $request->input('pay')[$i];
+            $pdc->status = "unpaied";
+            // $pdc->attach_file = $image_url;
+            $pdc->save();
+        }
+        return redirect('/dafpdc');
+
+    }
 }

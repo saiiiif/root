@@ -44,7 +44,7 @@ class EventsController extends Controller
 
 
         }
-
+        //return $session_list;
         return view('instructor.manage_all_session', ['events' => $listevent])->with(['om' => $om])->with(['omList' => $om_id])->with(['sessions' => $session_list]);
     }
 
@@ -99,16 +99,14 @@ class EventsController extends Controller
         return redirect('/instructor/sessions')->with($notification);
     }
     public function validatePdcInstructor(Request $request)
-    {
-
-        $pdcs = Pdcs::where('events_id', $request->event_id)->get();
-
+    { $id = Request('idtest');
+     $pdc=DB::Update("Update stm_pdcs set 	validated_instructor = '1' where 	events_id=$id");
         $notification = array(
             'message' => 'PDC valider avec success',
             'alert-type' => 'success'
         );
-       // return redirect('/instructor/sessions')->with($notification);
-        return 'aaaa';
+       return redirect('/instructor/sessions')->with($notification);
+       // return $id;
     }
     public function generate_om($id)
     {
